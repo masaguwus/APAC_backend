@@ -40,6 +40,9 @@ def register():
 
     try:
         new_user = Account(email=email, password=password)
+        set_session(new_user.session_id)
+        if get_session() != new_user.session_id:
+            return jsonify({"success": False, "message": "Failed to create session"}), 401
         db.session.add(new_user)
         db.session.flush()
 
