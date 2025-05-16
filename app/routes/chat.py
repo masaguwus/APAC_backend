@@ -62,17 +62,15 @@ def get_gemini_response(session_id, user_message, num_history=30):
         traceback.print_exc()
         return "An error occurred while trying to get a response from AI."
 
+
 @chat_blueprint.route("/cached-session-id", methods=["GET"])
 def get_cached_session_id():
-    """Get the cached session id from the user's session.
+    """Returns the user's cached session_id from Flask session."""
+    print("Request received at /chat/cached-session-id")
+    
+    session_id = session.get("session_id")
+    return jsonify({"session_id": session_id}), 200
 
-    Returns a JSON object with a single key "session_id" that is either the cached session id or None if no session id is cached.
-    """
-    print("Request received at chat/cached-session-id")
-    if db.session.get("session_id"):
-        return jsonify({"session_id": db.session.get("session_id")}), 200
-    else:
-        return jsonify({"session_id": None}), 200
     
 @chat_blueprint.route("/lumea_page/<string:session_id>/history", methods=["GET"])
 def chat_history(session_id):
