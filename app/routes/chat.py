@@ -96,7 +96,7 @@ def chat_history(session_id):
     return jsonify([msg.to_json() for msg in all_msgs])
 
 @chat_blueprint.route("/lumea_page/<string:session_id>/send", methods=["POST"])
-def chat():
+def chat(session_id):
     """Sends a message to the chat and receives a response from the AI.
     
     POST /lumea_page/send
@@ -113,7 +113,7 @@ def chat():
     
     data = request.get_json()
     
-    session_id = data.get("session_id")
+    session_id = session_id
     user_id = data.get("user_id")
     user_message = data.get("message")
 
@@ -147,12 +147,16 @@ def chat():
         
         return jsonify({
             "user": user_msg.to_json(),
-            "ai": ai_msg.to_json()
+            "ai": ai_msg.to_json(),
+            "session_id": session_id  # Include session_id in the response if needed
         }), 201
         
     except Exception as e:
         print("Gemini error:", e)
+        traceback.print_exc()
+        db.session.rollback()  # Rollback changes in case of error
         return jsonify({"error": "Internal server error"}), 500
+
     
 @chat_blueprint.route("/lumea_page/<string:session_id>/clear", methods=["DELETE"])
 def clear_chat(session_id):
