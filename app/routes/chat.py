@@ -70,7 +70,7 @@ def get_cached_session_id():
     
     session_id = session.get("session_id")
     
-    # test session_id
+    # test session_id for dummy
     if not session_id:
         return jsonify({"session_id": "5qewrew"}), 400
     
@@ -161,3 +161,7 @@ def clear_chat(session_id):
     ChatMessageAI.query.filter_by(session_id=session_id).delete()
     db.session.commit()
     return jsonify({"message": "Chat cleared"}), 200
+
+@chat_blueprint.route("/debug/session", methods=["GET"])
+def debug_session():
+    return jsonify(dict(session)), 200
