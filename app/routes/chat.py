@@ -69,6 +69,11 @@ def get_cached_session_id():
     print("Request received at /chat/cached-session-id")
     
     session_id = session.get("session_id")
+    
+    # test session_id
+    if not session_id:
+        return jsonify({"session_id": "5qewrew"}), 400
+    
     return jsonify({"session_id": session_id}), 200
 
     
