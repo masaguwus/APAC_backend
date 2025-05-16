@@ -72,7 +72,7 @@ def get_cached_session_id():
     
     # test session_id for dummy
     if not session_id:
-        return jsonify({"session_id": "5qewrew"}), 400
+        return jsonify({"session_id": None}), 200
     
     return jsonify({"session_id": session_id}), 200
 
@@ -157,7 +157,6 @@ def chat(session_id):
         db.session.rollback()  # Rollback changes in case of error
         return jsonify({"error": "Internal server error"}), 500
 
-    
 @chat_blueprint.route("/lumea_page/<string:session_id>/clear", methods=["DELETE"])
 def clear_chat(session_id):
     ChatMessageUser.query.filter_by(session_id=session_id).delete()
