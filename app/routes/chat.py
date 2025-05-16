@@ -76,7 +76,6 @@ def get_cached_session_id():
     
     return jsonify({"session_id": session_id}), 200
 
-    
 @chat_blueprint.route("/lumea_page/<string:session_id>/history", methods=["GET"])
 def chat_history(session_id):
     """Get the chat history for the given session_id.
