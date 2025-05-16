@@ -137,9 +137,11 @@ def chat(session_id):
         # Get AI response
         ai_reply = get_gemini_response(session_id, user_message)
 
+        formatted_ai_reply = f"{ai_reply}"
+
         ai_msg = ChatMessageAI(
             session_id=session_id,
-            message=ai_reply,
+            message=formatted_ai_reply,
             user_message_id=user_msg.id
         )
         db.session.add(ai_msg)
