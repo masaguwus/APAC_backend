@@ -16,11 +16,13 @@ def create_app():
     from .routes.signup import signup_blueprint
     from .routes.business import business_blueprint
     from .routes.chat import chat_blueprint
+    from .routes.profile import profile
 
     app.register_blueprint(auth_blueprint, url_prefix="/auth")
     app.register_blueprint(signup_blueprint, url_prefix="/auth/signup")
     app.register_blueprint(business_blueprint, url_prefix="/business")
     app.register_blueprint(chat_blueprint, url_prefix="/chat")
+    app.register_blueprint(profile, url_prefix="/profile")
 
     return app
 

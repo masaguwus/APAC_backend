@@ -137,7 +137,7 @@ def login():
         return jsonify({"success": False, "message": "User not found"}), 404
     if user.verify_password(password):
         
-        session["session_id"] = user.session_id
+        session["cached_session_id"] = user.session_id
         return jsonify(
             {"success": True, "message": "Login successful", "user_id": user.id}
         )
