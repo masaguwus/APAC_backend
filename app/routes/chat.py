@@ -72,7 +72,7 @@ def get_cached_session_id():
     
     # test session_id for dummy
     if not session_id:
-        return jsonify({"session_id": None}), 200
+        return jsonify({"session_id": "5qewrew"}), 200
     
     return jsonify({"session_id": session_id}), 200
 
@@ -150,6 +150,7 @@ def chat(session_id):
             "ai": ai_msg.to_json(),
             "session_id": session_id  # Include session_id in the response if needed
         }), 201
+
         
     except Exception as e:
         print("Gemini error:", e)
@@ -157,6 +158,7 @@ def chat(session_id):
         db.session.rollback()  # Rollback changes in case of error
         return jsonify({"error": "Internal server error"}), 500
 
+    
 @chat_blueprint.route("/lumea_page/<string:session_id>/clear", methods=["DELETE"])
 def clear_chat(session_id):
     ChatMessageUser.query.filter_by(session_id=session_id).delete()
